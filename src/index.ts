@@ -1,6 +1,7 @@
 import { Application, Sprite, Texture, Text, Graphics } from 'pixi.js'
 import IntroText from './IntroText';
 import Title from './Title';
+import Button from './Button';
 
 const app = new Application({
 	view: document.getElementById("pixi-canvas") as HTMLCanvasElement,
@@ -11,28 +12,22 @@ const app = new Application({
 	height: window.innerHeight, 
 });
 
-const focusedWallet: Texture = Texture.from('connect-wallet-focused.png');
-const unfocusedWallet: Texture = Texture.from("connect-wallet-unfocused.png");
-const walletButton: Sprite = Sprite.from(unfocusedWallet);
-walletButton.width = 300;
-walletButton.height = 40;
-
-walletButton.interactive = true;
-walletButton.on('mouseover', () => { walletButton.texture = focusedWallet });
-walletButton.on('mouseout', () => { walletButton.texture = unfocusedWallet });
-
-walletButton.anchor.set(-1.2, 8);
-
-walletButton.x = app.screen.width / 2;
-walletButton.y = app.screen.height / 2;
+const connectWalletButton = Button.createConnectWalletButton();
+connectWalletButton.x = app.screen.width / 2;
+connectWalletButton.y = app.screen.height / 2;
+const NFTStoreButton = Button.createNFTStoreButton();
+NFTStoreButton.x = app.screen.width / 2;
+NFTStoreButton.y = app.screen.height / 2;
 
 document.addEventListener('keypress', (e) => {
+  console.log(e.key);
   if (e.key == 'Enter') {
     IntroText.start(textGraphics);
     Title.start(letterCoors, titleGraphics);
   }
   setTimeout(() => {
-    app.stage.addChild(walletButton);
+    app.stage.addChild(connectWalletButton);
+    app.stage.addChild(NFTStoreButton);
   }, 1500);
 });
 
