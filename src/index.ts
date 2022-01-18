@@ -28,7 +28,6 @@ NFTButton.x = app.screen.width / 2;
 NFTButton.y = app.screen.height / 2;
 
 document.addEventListener('keypress', (e) => {
-  console.log(e.key);
   if (e.key == 'Enter') {
     IntroText.start(textGraphics);
     Title.start(letterCoors, titleGraphics);
@@ -66,7 +65,6 @@ const nftStoreApp = new Application({
 	width: window.innerWidth,
 	height: window.innerHeight, 
 });
-const connectWalletButton2 = Button.createConnectWalletButton();
-connectWalletButton2.x = nftStoreApp.screen.width / 2;
-connectWalletButton2.y = nftStoreApp.screen.height / 2;
-nftStoreApp.stage.addChild(connectWalletButton2);
+connectWalletButton.x = nftStoreApp.screen.width / 2;
+connectWalletButton.y = nftStoreApp.screen.height / 2;
+nftStoreApp.stage.addChild(connectWalletButton);

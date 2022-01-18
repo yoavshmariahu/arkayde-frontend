@@ -1,20 +1,6 @@
 import { Texture, Sprite, Container } from 'pixi.js'
 
 
-function connectWallet() {
-//  const isPhantomInstalled = window.solana && window.solana.isPhantom;
-//  if (isPhantomInstalled == true) {
-//    window.solana.connect()
-//      .then((resp) => {
-//        console.log(resp);
-//      });
-//  } else {
-//    window.open("https://phantom.app/", "_blank");
-//  }
-//  console.log('hey');
-}
-//window.solana.on('disconnect', () => console.log("disconnected!"))
-
 function goToNFTStore() {
   window.location.href = '/nft-store';
   //console.log(window.location.href);
@@ -30,15 +16,54 @@ var Button: IButton = {
   createConnectWalletButton: function() : Sprite {
     const focusedWallet: Texture = Texture.from('connect-wallet-focused.png');
     const unfocusedWallet: Texture = Texture.from("connect-wallet-unfocused.png");
+    const connectedWallet: Texture = Texture.from("connected-wallet.png");
     const walletButton: Sprite = Sprite.from(unfocusedWallet);
     walletButton.width = 280;
     walletButton.height = 40;
+    // @ts-ignore
+    walletButton.connected = false;
     
     walletButton.interactive = true;
     walletButton.buttonMode = true;
-    walletButton.on('mouseover', () => { walletButton.texture = focusedWallet });
-    walletButton.on('mouseout', () => { walletButton.texture = unfocusedWallet });
-    walletButton.on('mousedown', () => { connectWallet() });
+    walletButton.on('mouseover', () => {
+      // @ts-ignore
+      if (!walletButton.connected) {
+        walletButton.texture = focusedWallet
+      }
+    });
+    walletButton.on('mouseout', () => {
+      // @ts-ignore
+      if (!walletButton.connected) {
+        walletButton.texture = unfocusedWallet
+      }
+    });
+    walletButton.on('mousedown', () => {
+      // @ts-ignore
+      if (window.solana.isConnected) {
+        return;
+      }
+      // @ts-ignore
+      const isPhantomInstalled = window.solana && window.solana.isPhantom;
+      if (isPhantomInstalled == true) {
+        // @ts-ignore 
+        window.solana.connect()
+          // @ts-ignore
+          .then((resp) => {
+            walletButton.texture = connectedWallet;
+            walletButton.width = 180;
+            walletButton.anchor.set(-1.9, 8);
+            // @ts-ignore
+            walletButton.connected = true;
+          })
+          .catch((err) => {
+            console.log(err);
+          })
+      } else {
+        window.open("https://phantom.app/", "_blank");
+      }
+      // @ts-ignore
+      window.solana.on('disconnect', () => console.log("disconnected!"))
+    });
     walletButton.anchor.set(-1.2, 8);
     
     return walletButton;
