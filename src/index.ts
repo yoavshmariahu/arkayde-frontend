@@ -36,8 +36,8 @@ app.stage.addChild(textGraphics);
 // Create letters for title screen
 var letterCoors = Title.createLetters();
 const titleGraphics = new Graphics();
+titleGraphics.y = window.innerHeight / 9;
 app.stage.addChild(titleGraphics);
-
 
 app.ticker.add(() => {
   Title.moveLettersAcrossScreen(letterCoors, titleGraphics);
