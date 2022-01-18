@@ -23,6 +23,9 @@ const NFTStoreButton = Button.createNFTStoreButton();
 NFTStoreButton.x = app.screen.width / 2;
 NFTStoreButton.y = app.screen.height / 2;
 NFTStoreButton.on('mousedown', () => { app.stage.removeChild(NFTStoreButton) });
+const NFTButton = Button.createNFTButton();
+NFTButton.x = app.screen.width / 2;
+NFTButton.y = app.screen.height / 2;
 
 document.addEventListener('keypress', (e) => {
   console.log(e.key);
@@ -33,6 +36,7 @@ document.addEventListener('keypress', (e) => {
   setTimeout(() => {
     app.stage.addChild(connectWalletButton);
     app.stage.addChild(NFTStoreButton);
+    app.stage.addChild(NFTButton);
   }, 1500);
 });
 

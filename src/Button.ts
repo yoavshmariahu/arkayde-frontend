@@ -1,4 +1,5 @@
-import { Texture, Sprite } from 'pixi.js'
+import { Texture, Sprite, Container } from 'pixi.js'
+
 
 function connectWallet() {
 //  const isPhantomInstalled = window.solana && window.solana.isPhantom;
@@ -22,6 +23,7 @@ function goToNFTStore() {
 interface IButton {
   createConnectWalletButton: () => Sprite;
   createNFTStoreButton: () => Sprite;
+  createNFTButton: () => Container;
 }
 
 var Button: IButton = {
@@ -33,6 +35,7 @@ var Button: IButton = {
     walletButton.height = 40;
     
     walletButton.interactive = true;
+    walletButton.buttonMode = true;
     walletButton.on('mouseover', () => { walletButton.texture = focusedWallet });
     walletButton.on('mouseout', () => { walletButton.texture = unfocusedWallet });
     walletButton.on('mousedown', () => { connectWallet() });
@@ -43,17 +46,52 @@ var Button: IButton = {
   createNFTStoreButton: function() : Sprite {
     const focusedButton: Texture = Texture.from('nft-store-focused.png');
     const unfocusedButton: Texture = Texture.from("nft-store-unfocused.png");
-    const button: Sprite = Sprite.from(unfocusedButton);
-    button.width = 180;
-    button.height = 40;
+    const NFTStoreButton: Sprite = Sprite.from(unfocusedButton);
+    NFTStoreButton.width = 180;
+    NFTStoreButton.height = 40;
     
-    button.interactive = true;
-    button.on('mouseover', () => { button.texture = focusedButton });
-    button.on('mouseout', () => { button.texture = unfocusedButton });
-    button.on('mousedown', () => { goToNFTStore() });
-    button.anchor.set(3.5, 8);
+    NFTStoreButton.interactive = true;
+    NFTStoreButton.buttonMode = true;
+    NFTStoreButton.on('mouseover', () => { NFTStoreButton.texture = focusedButton });
+    NFTStoreButton.on('mouseout', () => { NFTStoreButton.texture = unfocusedButton });
+    NFTStoreButton.on('mousedown', () => { goToNFTStore() });
+    NFTStoreButton.anchor.set(3.5, 8);
     
-    return button;
+    return NFTStoreButton;
+  }, 
+  createNFTButton: function() : Container {
+    let container = new Container();
+
+    const unfocusedName: Texture = Texture.from('name-unfocused.png');
+    const nameButton: Sprite = Sprite.from(unfocusedName);
+    nameButton.width = 180;
+    nameButton.height = 20;
+    //nameButton.anchor.set(3.5, -0.5);
+    nameButton.position.x = -500;
+    nameButton.position.y = 150;
+    nameButton.interactive = true;
+    nameButton.buttonMode = true;
+
+    const unfocusedButton: Texture = Texture.from('nft-unfocused.png');
+    const NFTButton: Sprite = Sprite.from(unfocusedButton);
+    NFTButton.width = 180;
+    NFTButton.height = 180;
+    //NFTButton.anchor.set(3.5, 1);
+    NFTButton.position.x = -500
+    NFTButton.position.y = -40;
+    NFTButton.buttonMode = true;
+    NFTButton.interactive = true;
+
+    nameButton.on('mouseover', () => { nameButton.tint = 0x666666, NFTButton.tint = 0x666666 });
+    nameButton.on('mouseout', () => { nameButton.tint = 0xFFFFFF, NFTButton.tint = 0xFFFFFF });
+    NFTButton.on('mouseover', () => { NFTButton.tint = 0x666666, nameButton.tint = 0x666666 });
+    NFTButton.on('mouseout', () => { NFTButton.tint = 0xFFFFFF, nameButton.tint = 0xFFFFFF });
+
+  
+    container.addChild(nameButton);
+    container.addChild(NFTButton);
+
+    return container;
   }
 }
 
