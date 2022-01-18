@@ -78,6 +78,13 @@ module.exports = (env, argv) => {
                 template: 'src/index.ejs',
                 hash: true,
                 minify: false
+            }),
+            // Make an index.html from the template
+            new HtmlWebpackPlugin({
+                template: 'src/nft-index.ejs',
+                filename: 'nft-store/index.html',
+                hash: true,
+                minify: false
             })
         ]
     });

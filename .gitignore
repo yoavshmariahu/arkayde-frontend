@@ -1,4 +1,6 @@
 .vscode
 .cache
 dist
+*.swp
+*.swo
 node_modules

@@ -1,8 +1,11 @@
-import { Application, Sprite, Texture, Text, Graphics } from 'pixi.js'
+import { Application, Text, Graphics } from 'pixi.js'
 import IntroText from './IntroText';
 import Title from './Title';
 import Button from './Button';
 
+///////
+// Homepage PIXI App
+///////
 const app = new Application({
 	view: document.getElementById("pixi-canvas") as HTMLCanvasElement,
 	resolution: window.devicePixelRatio || 1,
@@ -12,12 +15,14 @@ const app = new Application({
 	height: window.innerHeight, 
 });
 
+
 const connectWalletButton = Button.createConnectWalletButton();
 connectWalletButton.x = app.screen.width / 2;
 connectWalletButton.y = app.screen.height / 2;
 const NFTStoreButton = Button.createNFTStoreButton();
 NFTStoreButton.x = app.screen.width / 2;
 NFTStoreButton.y = app.screen.height / 2;
+NFTStoreButton.on('mousedown', () => { app.stage.removeChild(NFTStoreButton) });
 
 document.addEventListener('keypress', (e) => {
   console.log(e.key);
@@ -43,3 +48,21 @@ app.ticker.add(() => {
   Title.moveLettersAcrossScreen(letterCoors, titleGraphics);
   IntroText.blinkLetters(textGraphics);
 });
+
+
+
+///////
+// NFT Store PIXI App
+///////
+const nftStoreApp = new Application({
+	view: document.getElementById("pixi-canvas-nft") as HTMLCanvasElement,
+	resolution: window.devicePixelRatio || 1,
+	autoDensity: true,
+	backgroundColor: 0x6465ed,
+	width: window.innerWidth,
+	height: window.innerHeight, 
+});
+const connectWalletButton2 = Button.createConnectWalletButton();
+connectWalletButton2.x = nftStoreApp.screen.width / 2;
+connectWalletButton2.y = nftStoreApp.screen.height / 2;
+nftStoreApp.stage.addChild(connectWalletButton2);

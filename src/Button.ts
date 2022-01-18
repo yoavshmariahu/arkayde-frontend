@@ -1,18 +1,23 @@
 import { Texture, Sprite } from 'pixi.js'
 
 function connectWallet() {
-  const isPhantomInstalled = window.solana && window.solana.isPhantom;
-  if (isPhantomInstalled == true) {
-    window.solana.connect()
-      .then((resp) => {
-        console.log(resp);
-      });
-  } else {
-    window.open("https://phantom.app/", "_blank");
-  }
-  console.log('hey');
+//  const isPhantomInstalled = window.solana && window.solana.isPhantom;
+//  if (isPhantomInstalled == true) {
+//    window.solana.connect()
+//      .then((resp) => {
+//        console.log(resp);
+//      });
+//  } else {
+//    window.open("https://phantom.app/", "_blank");
+//  }
+//  console.log('hey');
 }
 //window.solana.on('disconnect', () => console.log("disconnected!"))
+
+function goToNFTStore() {
+  window.location.href = '/nft-store';
+  //console.log(window.location.href);
+}
 
 interface IButton {
   createConnectWalletButton: () => Sprite;
@@ -45,6 +50,7 @@ var Button: IButton = {
     button.interactive = true;
     button.on('mouseover', () => { button.texture = focusedButton });
     button.on('mouseout', () => { button.texture = unfocusedButton });
+    button.on('mousedown', () => { goToNFTStore() });
     button.anchor.set(3.5, 8);
     
     return button;
